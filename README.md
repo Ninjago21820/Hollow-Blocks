@@ -1,3 +1,66 @@
+English | Français
+
+# 📖 Wiki: Modpack Creator Configuration Guide
+
+This mod is a **Client-Only** mod (installed on the client side only; it does not need to be installed on the server). It allows you to make certain vanilla or custom blocks non-opaque to properly display complex 3D models (hollowed-out blocks, cages, grates) without hiding the faces of adjacent blocks (*culling*) and with proper light propagation.
+
+---
+
+## 🛠️ Installation in a Modpack
+
+1. Download the `.jar` file corresponding to your mod loader (**Fabric** or **NeoForge**).
+2. Place the file into your modpack's `mods/` directory.
+3. If you are using Fabric, ensure you also include **Fabric API**.
+
+---
+
+## ⚙️ Configuration via Resource Pack
+
+The mod does not use a configuration file in the `config/` folder. Declaring hollow blocks is done **directly inside a Resource Pack** (for example, included via *Open Loader* or bundled within the modpack's default resource pack).
+
+### 1. File Location
+
+Inside your Resource Pack, create a JSON file at the following location:
+`assets/<namespace>/hollow_blocks.json`
+
+*(Examples: `assets/minecraft/hollow_blocks.json` or `assets/my_modpack/hollow_blocks.json`)*
+
+### 2. JSON Structure
+
+The file consists of a JSON object mapping the block ID (`namespace:block_id`) to its render attribute (`solid`, `partial`, or `transparent`).
+
+```json
+{
+  "minecraft:iron_block": "partial",
+  "minecraft:diamond_block": "transparent",
+  "minecraft:stone": "solid"
+}
+
+```
+
+---
+
+## 💡 Render Attributes Breakdown
+
+| Attribute | Culling (Neighboring Faces) | Light Propagation | Use Case |
+| --- | --- | --- | --- |
+| **`solid`** | Enabled (Hides faces) | Blocked | Standard vanilla behavior (full opaque blocks). |
+| **`partial`** | Disabled (Renders faces) | Passes through | Models with small openings, grates, or hollow shapes. |
+| **`transparent`** | Disabled (Renders faces) | Passes through | Glass blocks, open cages, or highly detailed, airy models. |
+
+---
+
+## ❓ FAQ & Compatibility
+
+* **Does this mod need to be installed on the server?**
+No, it is strictly **Client-Only**. Players can join any vanilla or modded server with this mod installed on their end.
+* **Is it compatible with Sodium / Iris / Embeddium?**
+Yes, the mod modifies occlusion properties at the `BlockStateBase` level, making it compatible with most rendering optimization mods.
+
+
+# ________________________________________________________________________________________________________________________________________________________
+
+
 # 📖 Wiki : Guide de configuration pour Modpacks
 
 Ce mod est un mod **Client-Only** (installé uniquement sur le client, pas besoin de l'avoir côté serveur). Il permet de rendre certains blocs vanilla ou personnalisés non-opaques pour afficher correctement les modèles 3D complexes (blocs creux, cages, grilles) sans masquer les faces des blocs voisins et en gérant la lumière.
